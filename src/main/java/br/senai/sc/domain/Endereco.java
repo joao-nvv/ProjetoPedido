@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+
 @Entity
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,6 +38,7 @@ public class Endereco implements Serializable {
 
 	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
 			Cidade cidade) {
+		super();
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
@@ -100,6 +102,14 @@ public class Endereco implements Serializable {
 
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@Override

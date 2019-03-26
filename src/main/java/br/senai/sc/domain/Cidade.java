@@ -27,6 +27,7 @@ public class Cidade implements Serializable {
 	}
 
 	public Cidade(Integer id, String nome, Estado estado) {
+		super();
 		this.id = id;
 		this.nome = nome;
 		this.estado = estado;
@@ -48,6 +49,13 @@ public class Cidade implements Serializable {
 		this.nome = nome;
 	}
 
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 
 	@Override
 	public int hashCode() {

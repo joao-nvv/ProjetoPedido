@@ -1,5 +1,6 @@
 package br.senai.sc.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +17,8 @@ import javax.persistence.OneToMany;
 import br.senai.sc.enums.TipoCliente;
 
 @Entity
-public class Cliente {
+public class Cliente implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +26,7 @@ public class Cliente {
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
-	private TipoCliente tipo;
+	private Integer tipo;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
@@ -38,11 +40,12 @@ public class Cliente {
 	}
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo;
+		this.tipo = tipo.getCodigo();
 	}
 
 	public Integer getId() {
@@ -78,11 +81,11 @@ public class Cliente {
 	}
 
 	public TipoCliente getTipo() {
-		return tipo;
+		return TipoCliente.toEnum(tipo);
 	}
 
 	public void setTipo(TipoCliente tipo) {
-		this.tipo = tipo;
+		this.tipo = tipo.getCodigo();
 	}
 
 	public List<Endereco> getEnderecos() {
@@ -125,5 +128,4 @@ public class Cliente {
 			return false;
 		return true;
 	}
-
 }
