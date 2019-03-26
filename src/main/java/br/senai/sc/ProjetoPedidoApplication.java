@@ -1,13 +1,23 @@
 package br.senai.sc;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.senai.sc.domain.Categoria;
+import br.senai.sc.domain.Cidade;
+import br.senai.sc.domain.Cliente;
+import br.senai.sc.domain.Endereco;
+import br.senai.sc.domain.Estado;
 import br.senai.sc.domain.Produto;
 import br.senai.sc.repositories.CategoriaRepository;
+import br.senai.sc.repositories.CidadeRepository;
+import br.senai.sc.repositories.ClienteRepository;
+import br.senai.sc.repositories.EnderecoRepository;
+import br.senai.sc.repositories.EstadoRepository;
 import br.senai.sc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -23,22 +33,61 @@ public class ProjetoPedidoApplication implements CommandLineRunner {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 
+	@Autowired
+	private CidadeRepository cidadeRepository;
+
+	@Autowired
+	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+
 	@Override
 	public void run(String... args) throws Exception {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
-		
+
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
+
+		Estado sp = new Estado(null, "São Paulo");
+		Estado mg = new Estado(null, "Minas Gerais");
 		
+		Cidade c1 = new Cidade(null, "Uberlandia", mg);
+		Cidade c2 = new Cidade(null, "São Paulo", sp);
+		Cidade c3 = new Cidade(null, "Campinas", sp);
+		
+		Endereco e1 = new Endereco(null,"Rua Flores","300","Apto 203","Jardim","38220834",null);
+
+		Cliente cli1 = new Cliente(null,"Maria Silva","maria@gmail.com","363778912377",null);
+		
+		cli1.setEnderecos(Arrays.asList(e1));
+				
 		p1.getCategorias().add(cat1);
 		cat1.getProdutos().add(p1);
+
+		mg.getCidades().add(c1);
+		sp.getCidades().add(c2);
+		sp.getCidades().add(c3);
+		
 		
 		categoriaRepository.save(cat1);
 		categoriaRepository.save(cat2);
 
 		produtoRepository.save(p1);
 		produtoRepository.save(p2);
+
+		estadoRepository.save(sp);
+		estadoRepository.save(mg);
+
+		cidadeRepository.save(c1);
+		cidadeRepository.save(c2);
+		cidadeRepository.save(c3);
+
+		clienteRepository.save(cli1);
 
 
 	}
